@@ -1,7 +1,6 @@
 package com.thr3.chhotu;
 
 import android.animation.ValueAnimator;
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
@@ -16,16 +15,11 @@ import android.speech.RecognizerIntent;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import android.support.annotation.NonNull;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.CardView;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.text.style.CharacterStyle;
-import android.text.style.MetricAffectingSpan;
 import android.util.SparseArray;
 import android.util.TypedValue;
 import android.view.MotionEvent;
@@ -45,24 +39,24 @@ import android.widget.Toast;
 import com.algorithmia.Algorithmia;
 import com.algorithmia.AlgorithmiaClient;
 import com.algorithmia.algo.AlgoResponse;
-import com.algorithmia.algo.Algorithm;
-import com.flurgle.camerakit.CameraListener;
-import com.flurgle.camerakit.CameraView;
+import com.algorithmia.algo.Algorithm;;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
+import com.wonderkiln.camerakit.CameraKitError;
+import com.wonderkiln.camerakit.CameraKitEvent;
+import com.wonderkiln.camerakit.CameraKitEventListener;
+import com.wonderkiln.camerakit.CameraKitImage;
+import com.wonderkiln.camerakit.CameraKitVideo;
+import com.wonderkiln.camerakit.CameraView;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
-import static android.R.attr.data;
 import static android.icu.lang.UCharacter.LineBreak.SPACE;
 
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
@@ -84,17 +78,35 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         setContentView(R.layout.activity_main);
-        cameraView=(CameraView)findViewById(R.id.cam);
-        cameraView.setCameraListener(new CameraListener() {
+        cameraView=findViewById(R.id.cam);
+        cameraView.addCameraKitListener(new CameraKitEventListener() {
             @Override
-            public void onPictureTaken(final byte[] picture) {
-                super.onPictureTaken(picture);
-                Bitmap bitmap = BitmapFactory.decodeByteArray(picture, 0, picture.length);
+            public void onEvent(CameraKitEvent cameraKitEvent) {
+
+            }
+
+            @Override
+            public void onError(CameraKitError cameraKitError) {
+
+            }
+
+            @Override
+            public void onImage(CameraKitImage cameraKitImage) {
+                Bitmap bmp = cameraKitImage.getBitmap();
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+                byte[] byteArray = stream.toByteArray();
+                Bitmap bitmap = BitmapFactory.decodeByteArray(byteArray, 0, byteArray.length);
                 openEditor(ocrGetString(bitmap));
                 click_load.setVisibility(View.GONE);click.setEnabled(true);
             }
+
+            @Override
+            public void onVideo(CameraKitVideo cameraKitVideo) {
+
+            }
         });
-        click =(ImageView)findViewById(R.id.click) ;
+        click =findViewById(R.id.click) ;
         click.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,20 +114,20 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 cameraView.captureImage();
             }
         });
-        splash_cover=(RelativeLayout)findViewById(R.id.splash_cover);
-        logo=(ImageView) findViewById(R.id.logo);
-        splash=(RelativeLayout)findViewById(R.id.splash);
-        f1=(RelativeLayout)findViewById(R.id.f1);
-        f2=(RelativeLayout)findViewById(R.id.f2);
-        f3=(RelativeLayout)findViewById(R.id.f3);
-        f4=(RelativeLayout)findViewById(R.id.f4);
-        f1_ico=(RelativeLayout) findViewById(R.id.f1_ico);
-        f2_ico=(RelativeLayout) findViewById(R.id.f2_ico);
-        f3_ico=(RelativeLayout) findViewById(R.id.f3_ico);
-        f4_ico=(RelativeLayout) findViewById(R.id.f4_ico);
-        load=(ProgressBar)findViewById(R.id.load);
-        click_load=(ProgressBar)findViewById(R.id.click_load);
-        logo_div=(RelativeLayout) findViewById(R.id.logo_div);
+        splash_cover=findViewById(R.id.splash_cover);
+        logo= findViewById(R.id.logo);
+        splash=findViewById(R.id.splash);
+        f1=findViewById(R.id.f1);
+        f2=findViewById(R.id.f2);
+        f3=findViewById(R.id.f3);
+        f4=findViewById(R.id.f4);
+        f1_ico= findViewById(R.id.f1_ico);
+        f2_ico= findViewById(R.id.f2_ico);
+        f3_ico= findViewById(R.id.f3_ico);
+        f4_ico= findViewById(R.id.f4_ico);
+        load=findViewById(R.id.load);
+        click_load=findViewById(R.id.click_load);
+        logo_div= findViewById(R.id.logo_div);
 
         textToSpeech = new TextToSpeech(this, this);
         textToSpeech.setOnUtteranceProgressListener(new UtteranceProgressListener() {
@@ -125,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         });
 
-        gallery=(ImageView) findViewById(R.id.gallery);
+        gallery= findViewById(R.id.gallery);
         gallery.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -134,16 +146,16 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 startActivityForResult(Intent.createChooser(intent, "Select Picture"), 2);
             }
         });
-        edit_text=(ImageView) findViewById(R.id.edit_text);
+        edit_text= findViewById(R.id.edit_text);
         edit_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 openEditor("");
             }
         });
-        article_text=(EditText)findViewById(R.id.article_text);
+        article_text=findViewById(R.id.article_text);
 
-        clear=(CardView)findViewById(R.id.clear);
+        clear=findViewById(R.id.clear);
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -151,8 +163,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         });
 
-        speak_pic=(ImageView)findViewById(R.id.speak_pic) ;
-        speak=(CardView)findViewById(R.id.speak);
+        speak_pic=findViewById(R.id.speak_pic) ;
+        speak=findViewById(R.id.speak);
         speak.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -162,7 +174,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 else{textToSpeech.stop();speak_pic.setImageResource(R.drawable.speak);}
             }
         });
-        shortify=(CardView)findViewById(R.id.shortify);
+        shortify=findViewById(R.id.shortify);
         shortify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -173,7 +185,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 Summariser(article_text.getText().toString());
             }
         });
-        voice=(CardView)findViewById(R.id.voice);
+        voice=findViewById(R.id.voice);
         voice.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -185,7 +197,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 startActivityForResult(intent, 1);
             }
         });
-        open_camera=(CardView)findViewById(R.id.open_camera);
+        open_camera=findViewById(R.id.open_camera);
         open_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -213,8 +225,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         });
 
-        menu_pic=(ImageView) findViewById(R.id.menu_pic);
-        menu=(CardView) findViewById(R.id.menu);
+        menu_pic= findViewById(R.id.menu_pic);
+        menu= findViewById(R.id.menu);
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -230,8 +242,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         });
 
-        permission_camera=(RelativeLayout) findViewById(R.id.permission_camera);
-        allow_camera =(Button)findViewById(R.id.allow_camera);
+        permission_camera= findViewById(R.id.permission_camera);
+        allow_camera =findViewById(R.id.allow_camera);
         allow_camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -239,7 +251,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         });
 
-        start=(TextView) findViewById(R.id.start);
+        start= findViewById(R.id.start);
         start.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -255,7 +267,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 return true;
             }
         });
-        editor=(RelativeLayout)findViewById(R.id.editor);editor.setVisibility(View.INVISIBLE);
+        editor=findViewById(R.id.editor);editor.setVisibility(View.INVISIBLE);
 
         new Handler().postDelayed(new Runnable() {
             @Override
@@ -388,7 +400,7 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     {
         article_text.setMinimumHeight(editor.getHeight()-(int)dptopx(55));
         article_text.setText(text);cameraView.setVisibility(View.GONE);click.setVisibility(View.GONE);
-        edit=(CardView)findViewById(R.id.edit);
+        edit=findViewById(R.id.edit);
         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.editor_enter);
         anim.setAnimationListener(new Animation.AnimationListener() {
             @Override public void onAnimationStart(Animation animation) {}

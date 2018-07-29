@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/cam_page">
-        <com.flurgle.camerakit.CameraView
+        <com.wonderkiln.camerakit.CameraView
             android:id="@+id/cam"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -18,11 +18,10 @@
             camerakit:ckFlash="off"
             camerakit:ckFocus="continuous"
             camerakit:ckMethod="standard"
-            camerakit:ckZoom="pinch"
             camerakit:ckPermissions="strict"
             camerakit:ckCropOutput="true"
             camerakit:ckJpegQuality="100"
-            android:adjustViewBounds="true" />
+            android:adjustViewBounds="false" />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
