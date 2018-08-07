@@ -8,7 +8,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.speech.RecognizerIntent;
@@ -36,10 +35,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.algorithmia.Algorithmia;
-import com.algorithmia.AlgorithmiaClient;
-import com.algorithmia.algo.AlgoResponse;
-import com.algorithmia.algo.Algorithm;;
 import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;
@@ -52,12 +47,7 @@ import com.wonderkiln.camerakit.CameraView;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
 import java.util.Locale;
-import java.util.Map;
-import static android.icu.lang.UCharacter.LineBreak.SPACE;
 
 public class MainActivity extends AppCompatActivity implements TextToSpeech.OnInitListener{
     CameraView cameraView;
@@ -81,15 +71,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         cameraView=findViewById(R.id.cam);
         cameraView.addCameraKitListener(new CameraKitEventListener() {
             @Override
-            public void onEvent(CameraKitEvent cameraKitEvent) {
-
-            }
-
+            public void onEvent(CameraKitEvent cameraKitEvent) {}
             @Override
-            public void onError(CameraKitError cameraKitError) {
-
-            }
-
+            public void onError(CameraKitError cameraKitError) {}
             @Override
             public void onImage(CameraKitImage cameraKitImage) {
                 Bitmap bmp = cameraKitImage.getBitmap();
@@ -100,11 +84,8 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 openEditor(ocrGetString(bitmap));
                 click_load.setVisibility(View.GONE);click.setEnabled(true);
             }
-
             @Override
-            public void onVideo(CameraKitVideo cameraKitVideo) {
-
-            }
+            public void onVideo(CameraKitVideo cameraKitVideo) { }
         });
         click =findViewById(R.id.click) ;
         click.setOnClickListener(new View.OnClickListener() {
@@ -178,11 +159,9 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         shortify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                scaleY(edit.getHeight()+(int)dptopx(80),130,edit);Summarizer(article_text.getText().toString());menu.setEnabled(false);
+                scaleY(edit.getHeight()+(int)dptopx(80),130,edit);menu.setEnabled(false);
                 isMenuOpen=false;menu_pic.setImageResource(R.drawable.up);
-
-                //Calling Summary Function Here
-                Summariser(article_text.getText().toString());
+                article_text.setText((new Summarizer()).Summarize(article_text.getText().toString()));
             }
         });
         voice=findViewById(R.id.voice);
@@ -330,67 +309,6 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         },1500);
     }
-    public String Summariser(String s)
-    {
-        String text=s;
-        text = text.replaceAll("\n", "").replaceAll("\r", "");
-        text = text.replaceAll("!", "");
-        text = text.replaceAll("s ", " ");
-        text=text.replaceAll("(?i)(^([a-z])\\.|(?<= )([a-z])\\.|(?<=\\.)([a-z])\\.)", "$2$3$4").trim();
-        text=text.replaceAll("(?i)^(([a-z]) ([a-z]))($| )", "$2$3"+SPACE).trim();
-        text=text.replaceAll("(?i)(?<= )(([a-z]) ([a-z]))($| )", "$2$3"+SPACE).trim();
-
-        String [] sentences=text.split("\\.");
-        for(int i=0;i<sentences.length;i++)
-        {
-            sentences[i]=sentences[i].trim();
-        }
-
-        String[] words = text.split(" ");
-        Map<String, Integer> frequencies = new LinkedHashMap<>();
-        for (String word : words) {
-            if (!word.isEmpty()) {
-                Integer frequency = frequencies.get(word);
-                if (frequency == null) {frequency = 0;}
-                ++frequency;
-                frequencies.put(word, frequency);
-            }
-        }
-        Object[] a = frequencies.entrySet().toArray();
-        Arrays.sort(a, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((Map.Entry<String, Integer>) o2).getValue().compareTo(((Map.Entry<String, Integer>) o1).getValue());
-            }
-        });
-
-        Map<String, Integer> summary = new LinkedHashMap<>();
-        for(int i=0;i<sentences.length;i++)
-        {
-            String temp[]=sentences[i].split(" ");
-            int point=0;
-            for (String word : temp) {
-                if(frequencies.containsKey(word))
-                {
-                    int val = frequencies.get(word);
-                    point=point+val;
-                }
-            }
-            summary.put(sentences[i],point);
-        }
-        a = summary.entrySet().toArray();
-        Arrays.sort(a, new Comparator() {
-            public int compare(Object o1, Object o2) {
-                return ((Map.Entry<String, Integer>) o2).getValue().compareTo(((Map.Entry<String, Integer>) o1).getValue());
-            }
-        });
-        text="";int count=sentences.length/2;
-        for (Object e : a)
-        {
-            if(count<=0){break;}
-            text=text+((Map.Entry<String, Integer>) e).getKey()+" ";
-        }
-        return text;
-    }
     @Override
     public void onInit(int Text2SpeechCurrentStatus)
     {
@@ -529,27 +447,5 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         if(camStarted){cameraView.stop();camStarted=false;}
         if(textToSpeech.isSpeaking()){textToSpeech.stop();speak_pic.setImageResource(R.drawable.speak);}
         super.onPause();
-    }
-    public void Summarizer(String article)
-    {
-        new AsyncTask<String, String, String>(){
-            @Override
-            protected String doInBackground(String... params) {
-                try
-                {
-                    AlgorithmiaClient client = Algorithmia.client("sim7hyjNavSmphxD4pR1gtchq6r1");
-                    Algorithm algo = client.algo("algo://nlp/Summarizer/0.1.6");
-                    AlgoResponse  result = algo.pipe(params[0]);
-                    return result.asJsonString();
-                }
-                catch (Exception e){return e.toString();}
-            }
-            @Override
-            protected void onPostExecute(String msg)
-            {
-                summary= msg;menu.setEnabled(true);
-                article_text.setText(msg);
-            }
-        }.execute(article, null, null);
     }
 }
