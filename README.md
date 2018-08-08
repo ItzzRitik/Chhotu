@@ -6,7 +6,7 @@ It doesn’t use any **machine learning** or **natural language processing** tec
 This article summarizer mobile application was developed in under 24hrs time bracket during a hackathon competition hosted by Mozilla, 
 this application fetched our team 1st Prize in this competition. 
 
-##Features
+## Features
 -	Stunning user interface and animations.
 -	No ML or NLP used.
 -	Totally Regex based string processing.
