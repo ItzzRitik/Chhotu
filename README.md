@@ -21,7 +21,7 @@ Machine learning is a method of **data analysis** that automates analytical mode
 ### Natural Language Processing
 The field of **study** that focuses on the interactions between human language and computers is called **Natural Language Processing**, or NLP for short. It sits at the **intersection** of computer science, artificial intelligence, and computational linguistics.
 
-### Algorithm
+## Algorithm
 - Start by recording raw frequencies of words within the text. Ideally, a Map works best for this.
 - Next, any stopwords within the Map are filtered and removed; so as to reduce redundancy and keep only certain key phrases and words.
 - After, sort the Map, from greatest word frequency to least.
