@@ -8,21 +8,20 @@ public class Summarizer
 	private Map<String, Integer> getWordCounts(String text)
 	{
 		Map<String,Integer> allWords = new HashMap<String, Integer>();
-		
 		int count;
 		int singleIncrement = 0;
-		text.trim();
+		text=text.trim();
 		String[] words = text.split("\\s+");
-		for(int i = 0; i < words.length; i++)
+		for (String word : words)
 		{
 			count = 0;
-			if(allWords.containsKey(words[i]))
+			if (allWords.containsKey(word))
 			{
-				allWords.put(words[i], singleIncrement += 1);
+				allWords.put(word, singleIncrement += 1);
 			}
 			else
 			{
-				allWords.put(words[i], count++);
+				allWords.put(word, ++count);
 			}
 		}
 		return allWords;
@@ -30,8 +29,9 @@ public class Summarizer
 	private Map<String,Integer> filterStopWords(Map<String, Integer> d)
 	{
         String[] stop_words = { "a","able","about","after","all","also","am",
-        "an","and","any","are","as","at","be","because","been","but","by","can","cannot","could","did",
-        "do","does","either","else","ever","every","for","from","get","got","had","has","have","he","her","hers","him","his","how","I",
+        "an","and","any","are","as","at","be","because","been","but","by","can",
+        "do","does","either","else","ever","every","for","from","get","got","had",
+        "cannot","could","did","has","have","he","her","hers","him","his","how","I",
         "if","in","into","is","it","its","just","let","like","likely","may","me",
         "might","most","must","my","neither","no","nor","not","of","off",
         "often","on","only","or","other","our","own","said","say","says","she",
@@ -39,13 +39,13 @@ public class Summarizer
         "these","they","this","they're","to","too","that's","us","was","we","were",
         "what","when","where","which","while","who","whom","why","will","with",
         "would","yet","you","your", "you're" };
-        for(int i= 0;i<stop_words.length; i++)
-        {
-        	if(d.containsKey(stop_words[i]))
-        	{
-        		d.remove(stop_words[i]);
-        	}
-        }
+		for (String stop_word : stop_words)
+		{
+			if (d.containsKey(stop_word))
+			{
+				d.remove(stop_word);
+			}
+		}
         return d;
 	}
 	private List<String> sortByFreqThenDropFreq(Map<String,Integer> wordFrequencies)
@@ -74,13 +74,13 @@ public class Summarizer
 	private String search(String[] sentences, String word)
 	{
 		String first_matching_sentence = null;
-		for(int i = 0; i < sentences.length; i++)
-		{
-			if(sentences[i].contains(word))
-			{
-				first_matching_sentence = sentences[i];
-			}
-		}
+        for (String sentence : sentences)
+        {
+            if (sentence.contains(word))
+            {
+                first_matching_sentence = sentence;
+            }
+        }
 		return first_matching_sentence;
 	}
 	public String Summarize(String text)

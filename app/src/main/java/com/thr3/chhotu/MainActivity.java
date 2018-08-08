@@ -3,6 +3,7 @@ package com.thr3.chhotu;
 import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -53,21 +54,22 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
     CameraView cameraView;
     ImageView click,logo,menu_pic,gallery,edit_text,speak_pic;
     RelativeLayout splash,splash_cover,logo_div,f1,f2,f3,f4,f1_ico,f2_ico,f3_ico,f4_ico,permission_camera,editor;
-    boolean camStarted=false,isMenuOpen=false;
+    boolean camStarted=false,isMenuOpen=false,sum=false;
     Button allow_camera;
     TextView start;
     ProgressBar load,click_load;
-    String summary="";
+    String atricle="";
     EditText article_text;
     CardView edit,menu,shortify,open_camera,voice,clear,speak;
     TextToSpeech textToSpeech;
-
+    SharedPreferences settings;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         setContentView(R.layout.activity_main);
+        settings = getSharedPreferences("settings", 0);
         cameraView=findViewById(R.id.cam);
         cameraView.addCameraKitListener(new CameraKitEventListener() {
             @Override
@@ -159,9 +161,13 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         shortify.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                scaleY(edit.getHeight()+(int)dptopx(80),130,edit);menu.setEnabled(false);
+                scaleY(edit.getHeight()+(int)dptopx(80),130,edit);
                 isMenuOpen=false;menu_pic.setImageResource(R.drawable.up);
+                atricle=article_text.getText().toString();
                 article_text.setText((new Summarizer()).Summarize(article_text.getText().toString()));
+                clear.setVisibility(View.INVISIBLE);speak.setVisibility(View.INVISIBLE);
+                menu_pic.setImageResource(R.drawable.again);
+                if(!sum) { sum=true; }
             }
         });
         voice=findViewById(R.id.voice);
@@ -209,14 +215,27 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
         menu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(!isMenuOpen)
+                if(!sum)
                 {
-                    if(camStarted){cameraView.stop();camStarted=false;}cameraView.setVisibility(View.GONE);
-                    scaleY(edit.getHeight()-(int)dptopx(80),130,edit);isMenuOpen=true;menu_pic.setImageResource(R.drawable.down);
+                    if(!isMenuOpen)
+                    {
+                        if(camStarted){cameraView.stop();camStarted=false;}cameraView.setVisibility(View.GONE);
+                        scaleY(edit.getHeight()-(int)dptopx(80),130,edit);
+                        isMenuOpen=true;
+                        menu_pic.setImageResource(R.drawable.down);
+                    }
+                    else
+                    {
+                        scaleY(edit.getHeight()+(int)dptopx(80),130,edit);isMenuOpen=false;
+                        menu_pic.setImageResource(R.drawable.up);
+                    }
                 }
                 else
                 {
-                    scaleY(edit.getHeight()+(int)dptopx(80),130,edit);isMenuOpen=false;menu_pic.setImageResource(R.drawable.up);
+                    clear.setVisibility(View.VISIBLE);speak.setVisibility(View.VISIBLE);
+                    menu_pic.setImageResource(R.drawable.up);
+                    article_text.setText(atricle);
+                    sum=false;
                 }
             }
         });
@@ -247,7 +266,10 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         });
         editor=findViewById(R.id.editor);editor.setVisibility(View.INVISIBLE);
-
+        splash();
+    }
+    public void splash()
+    {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run()
@@ -260,49 +282,57 @@ public class MainActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     @Override public void onAnimationRepeat(Animation animation) {}
                     @Override public void onAnimationEnd(Animation animation)
                     {
-                        new Handler().postDelayed(new Runnable() {@Override public void run()
+                        if (settings.getBoolean("first run", true))
                         {
-                            Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.f_grow);
-                            f1_ico.setVisibility(View.VISIBLE);f1_ico.startAnimation(anim);
-                        }},200);
-                        new Handler().postDelayed(new Runnable() {@Override public void run()
+                            new Handler().postDelayed(new Runnable() {@Override public void run()
+                            {
+                                Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.f_grow);
+                                f1_ico.setVisibility(View.VISIBLE);f1_ico.startAnimation(anim);
+                            }},200);
+                            new Handler().postDelayed(new Runnable() {@Override public void run()
+                            {
+                                f1.setVisibility(View.VISIBLE);scaleX(splash.getWidth()-(int)dptopx(20),300,f1);
+                            }},500);
+                            new Handler().postDelayed(new Runnable() {@Override public void run()
+                            {
+                                Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.f_grow);
+                                f2_ico.setVisibility(View.VISIBLE);f2_ico.startAnimation(anim);
+                            }},800);
+                            new Handler().postDelayed(new Runnable() {@Override public void run()
+                            {
+                                f2.setVisibility(View.VISIBLE);scaleX(splash.getWidth()-(int)dptopx(20),300,f2);
+                            }},1100);
+                            new Handler().postDelayed(new Runnable() {@Override public void run()
+                            {
+                                Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.f_grow);
+                                f3_ico.setVisibility(View.VISIBLE);f3_ico.startAnimation(anim);
+                            }},1400);
+                            new Handler().postDelayed(new Runnable() {@Override public void run()
+                            {
+                                f3.setVisibility(View.VISIBLE);scaleX(splash.getWidth()-(int)dptopx(20),300,f3);
+                            }},1700);
+                            new Handler().postDelayed(new Runnable() {@Override public void run()
+                            {
+                                Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.f_grow);
+                                f4_ico.setVisibility(View.VISIBLE);f4_ico.startAnimation(anim);
+                            }},2000);
+                            new Handler().postDelayed(new Runnable() {@Override public void run()
+                            {
+                                f4.setVisibility(View.VISIBLE);scaleX(splash.getWidth()-(int)dptopx(20),300,f4);
+                            }},2300);
+                            new Handler().postDelayed(new Runnable() {@Override public void run()
+                            {
+                                load.setVisibility(View.GONE);start.setVisibility(View.VISIBLE);
+                                scaleX(splash.getWidth()/3,100,start);
+                                new Handler().postDelayed(new Runnable()
+                                {@Override public void run() {start.setText("Get Started");}},300);
+                            }},3000);
+                            settings.edit().putBoolean("first run", false).apply();
+                        }
+                        else
                         {
-                            f1.setVisibility(View.VISIBLE);scaleX(splash.getWidth()-(int)dptopx(20),300,f1);
-                        }},500);
-                        new Handler().postDelayed(new Runnable() {@Override public void run()
-                        {
-                            Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.f_grow);
-                            f2_ico.setVisibility(View.VISIBLE);f2_ico.startAnimation(anim);
-                        }},800);
-                        new Handler().postDelayed(new Runnable() {@Override public void run()
-                        {
-                            f2.setVisibility(View.VISIBLE);scaleX(splash.getWidth()-(int)dptopx(20),300,f2);
-                        }},1100);
-                        new Handler().postDelayed(new Runnable() {@Override public void run()
-                        {
-                            Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.f_grow);
-                            f3_ico.setVisibility(View.VISIBLE);f3_ico.startAnimation(anim);
-                        }},1400);
-                        new Handler().postDelayed(new Runnable() {@Override public void run()
-                        {
-                            f3.setVisibility(View.VISIBLE);scaleX(splash.getWidth()-(int)dptopx(20),300,f3);
-                        }},1700);
-                        new Handler().postDelayed(new Runnable() {@Override public void run()
-                        {
-                            Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.f_grow);
-                            f4_ico.setVisibility(View.VISIBLE);f4_ico.startAnimation(anim);
-                        }},2000);
-                        new Handler().postDelayed(new Runnable() {@Override public void run()
-                        {
-                            f4.setVisibility(View.VISIBLE);scaleX(splash.getWidth()-(int)dptopx(20),300,f4);
-                        }},2300);
-                        new Handler().postDelayed(new Runnable() {@Override public void run()
-                        {
-                            load.setVisibility(View.GONE);start.setVisibility(View.VISIBLE);
-                            scaleX(splash.getWidth()/3,100,start);
-                            new Handler().postDelayed(new Runnable()
-                            {@Override public void run() {start.setText("Get Started");}},300);
-                        }},3000);
+                            closeIntro();
+                        }
                     }
                 });
                 logo_div.setVisibility(View.VISIBLE);logo_div.startAnimation(anima);logo.startAnimation(anim);
