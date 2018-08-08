@@ -11,7 +11,7 @@ this mobile application fetched our team **Rank 1** in this hackathon.
 -	No heavy **Machine Learning** or **Natural Language Processing** scripts used.
 -	Totally **Regular Expression** based string processing.
 -	Get **audible output** of your text doccument or genarated summary.
-- Enter your text documment just by **speaking**.
+- **Enter** your text documment just by **speaking**.
 -	**Optical character reader** to directly capture your hard written documents.
 
 ### Machine Learning
@@ -21,9 +21,9 @@ Machine learning is a method of **data analysis** that automates analytical mode
 The field of **study** that focuses on the interactions between human language and computers is called **Natural Language Processing**, or NLP for short. It sits at the **intersection** of computer science, artificial intelligence, and computational linguistics.
 
 ## Algorithm
-- Initially create a **Map** of raw frequencies of words within the text doccument.
-- Next, any stopwords within the Map are filtered and removed; so as to reduce redundancy and keep only certain key phrases and words.
-- After, sort the Map, from greatest word frequency to least.
+- Initially Generate a **Map** of raw frequencies of words within the text doccument.
+- Lets now **reduce redundancy**, by filtering out any **stopwords** within the generated Map, and keeping only **certain key phrases** and words.
+- Now, sort the **Map** in decreasing order of **word frequency**.
 - Then, get sentences from your original text, formatting and making sure any abbreviations and suffixes with a period or decimal are not counted as the ending of a sentence.
 - Next, for text that is from online, we need to format and adjust it so that certain un-needed text is removed.
 - Finally, obtain the summary by going through your list of sentences (from step 4) and then using your Map, compare and find the key phrases and words from each sentence. If found, add that sentence to the summary list.
