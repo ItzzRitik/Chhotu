@@ -7,7 +7,7 @@ This **article summarizer** was developed in under **24hrs time bracket** during
 this mobile application fetched our team **Rank 1** in this hackathon. 
 
 ## Features
--	Stunning **user interface**, to keep you enchanted while going through **boring** text doccuments.
+-	**Stunning user interface**, to keep you enchanted while going through **boring** text doccuments.
 -	No heavy **Machine Learning** or **Natural Language Processing** scripts used.
 -	Totally **Regular Expression** based string processing.
 -	Get **audible output** of your text doccument or genarated summary.
