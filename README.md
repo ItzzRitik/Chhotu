@@ -16,5 +16,7 @@ this mobile application fetched our team **Rank 1** in this hackathon.
 -	Lightweight.
 
 ### Machine Learning
-Machine learning is a method of data analysis that automates analytical model building. It is a branch of artificial intelligence based on the idea that systems can learn from data, identify patterns and make decisions with minimal human intervention.
+Machine learning is a method of **data analysis** that automates analytical model building. It is a branch of **artificial intelligence** based on the idea that systems can **learn** from data, identify patterns and **make decisions** with minimal human intervention.
 
+### Natural Language Processing
+The field of **study** that focuses on the interactions between human language and computers is called **Natural Language Processing**, or NLP for short. It sits at the **intersection** of computer science, artificial intelligence, and computational linguistics 
