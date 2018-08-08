@@ -4,6 +4,9 @@
 
 It doesn’t use any **machine learning** or **natural language processing** technology, but **Regex based string processing** to achieve its goal. 
 
+This **article summarizer** was developed in under **24hrs time bracket** during a hackathon competition hosted by **Mozilla**, 
+this mobile application fetched our team **Rank 1** in this hackathon. 
+
 ## Features
 -	Stunning user interface and animations.
 -	No ML or NLP used.
@@ -15,5 +18,3 @@ It doesn’t use any **machine learning** or **natural language processing** tec
 ### Machine Learning
 Machine learning is a method of data analysis that automates analytical model building. It is a branch of artificial intelligence based on the idea that systems can learn from data, identify patterns and make decisions with minimal human intervention.
 
-This **article summarizer** was developed in under **24hrs time bracket** during a hackathon competition hosted by **Mozilla**, 
-this mobile application fetched our team **Rank 1** in this hackathon. 
