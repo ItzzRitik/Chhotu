@@ -1,7 +1,6 @@
 # Chhotu - The Article Summarizer
 
 **Chhotu** is article summarizer mobile application that can be used to generate **summary** of document provided by user.
-
 It doesn’t use any **Machine Learning** or **Natural Language Processing** Techniques, but **Regex based string processing** to achieve its goal. 
 
 This **article summarizer** was developed in under **24hrs time bracket** during a hackathon competition hosted by **Mozilla**, 
