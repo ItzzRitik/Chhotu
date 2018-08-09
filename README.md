@@ -21,10 +21,10 @@ this mobile application fetched our team **Rank 1** in this hackathon.
 The field of **study** that focuses on the interactions between human language and computers is called **Natural Language Processing**, or NLP for short. It sits at the **intersection** of computer science, artificial intelligence, and computational linguistics.
 
 ## Algorithm
-- Initially Generate a **Map** of raw frequencies of words within the text doccument.
+- Initially, Generate a **Map** of raw frequencies of words within the text doccument.
 - Lets now **reduce redundancy**, by filtering out any **stopwords** within the generated Map, and keeping only **certain key phrases** and words.
 - Now, sort the **Map** in decreasing order of **frequency** of words.
-- Then, retrieve sentences from your original text, **format** and making sure any **abbreviations** and **suffixes** with a period or decimal are not counted as the ending of a sentence.
+- Then, retrieve sentences from your original text doccument, **format** and making sure any **abbreviations** and **suffixes** with a period or decimal are not counted as the ending of a sentence.
 - Next, for text that is **unformatted**, we need to format and adjust it so that certain **un-needed** text is filtered out.
 - Finally, obtain the **summary** by going through your list of sentences and then using your **Map**, compare and find the key phrases and words from each sentence. If found, add that sentence to the **summary** list.
 - Once all done, return the **summary** as a String.
