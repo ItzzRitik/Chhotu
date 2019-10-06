@@ -28,3 +28,11 @@ The field of **study** that focuses on the interactions between human language a
 - Next, for text that is **unformatted**, we need to format and adjust it so that certain **un-needed** text is filtered out.
 - Finally, obtain the **summary** by going through your list of sentences and then using your **Map**, compare and find the key phrases and words from each sentence. If found, add that sentence to the **summary** list.
 - Once all done, return the **summary** as a String.
+
+## Screenshots
+<img src="Screenshots/home.png" width="33.3333%"><img src="Screenshots/camera.png" width="33.3333%"><img src="Screenshots/ocr.png" width="33.3333%"><img src="Screenshots/dashboard.png" width="33.3333%"><img src="screenshots/googlevoice.png" width="33.3333%"><img src="screenshots/summary.png" width="33.3333%">
+
+## Download  
+**Surfer Browser** mobile application is packed with lot of features and ideal for any anybody who likes surfing over internet. Get your hands on it for free.  
+
+[<img src="download_button.png" width="200">](app/Chhotu.apk?raw=true)
