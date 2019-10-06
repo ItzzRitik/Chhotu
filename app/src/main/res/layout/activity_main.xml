@@ -319,7 +319,7 @@
         android:id="@+id/editor"
         android:clickable="true"
         android:background="@mipmap/background">
-        <android.support.v7.widget.CardView
+        <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/edit"
@@ -346,7 +346,7 @@
                         android:id="@+id/article_text"
                         android:background="@null"/>
                 </ScrollView>
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:id="@+id/menu"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -367,8 +367,8 @@
                         android:paddingBottom="13dp"
                         android:id="@+id/menu_pic"
                         android:src="@drawable/up"/>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
                     android:id="@+id/speak"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -390,8 +390,8 @@
                         android:paddingBottom="13dp"
                         android:id="@+id/speak_pic"
                         android:src="@drawable/speak"/>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
                     android:id="@+id/clear"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
@@ -413,14 +413,14 @@
                         android:paddingBottom="15dp"
                         android:id="@+id/clear_pic"
                         android:src="@drawable/cross"/>
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
             </RelativeLayout>
-        </android.support.v7.widget.CardView>
+        </androidx.cardview.widget.CardView>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="80dp"
             android:layout_alignParentBottom="true">
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:id="@+id/shortify"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
@@ -440,8 +440,8 @@
                     android:paddingTop="9dp"
                     android:paddingBottom="11dp"
                     android:src="@drawable/logo_outline"/>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
                 android:id="@+id/open_camera"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -461,8 +461,8 @@
                     android:paddingTop="14dp"
                     android:paddingBottom="15dp"
                     android:src="@drawable/camera"/>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
                 android:id="@+id/voice"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
@@ -482,7 +482,7 @@
                     android:paddingTop="14dp"
                     android:paddingBottom="15dp"
                     android:src="@drawable/voice"/>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
         </RelativeLayout>
    </RelativeLayout>
 </RelativeLayout>
